@@ -81,7 +81,7 @@ body {
   padding: 20px;
   border: 1px solid #aaa;
   width: 80%; /* Could be more or less, depending on screen size */
-  height: 80%;
+  height: 100vh;
   }
 
   .close {
