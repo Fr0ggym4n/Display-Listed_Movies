@@ -1,10 +1,29 @@
 const URL = "https://www.omdbapi.com/?apikey=cffce37f&"
-const imgURL = "http://img.omdbapi.com/?apikey=cffce37f&"
-
 const selector = document.getElementById("movie");
 
+const fetchAll = (movie) => {
+    let movieNameClean = movie.replace(/\s/g, '+');
+    fetch(URL + "s=" + movieNameClean)
+      .then((response) => response.json())
+      .then((response) => {
+        let movies = response.Search
+        selector.innerHTML = "";
+        console.log(response); // A remove
+        movies.forEach(movie => {
+            if (movie.Poster !== "N/A"){
+                const poster = movie.Poster;
+                const title = movie.Title;
+                const released = movie.Year;
+      
+                moviesInfo(poster, title, released)
+            }
+      });
+    })
+
+}
+
 const fetchMovies = (movie) => {
-    var movieNameClean = movie.replace(/\s/g, '+');
+    let movieNameClean = movie.replace(/\s/g, '+');
     fetch(URL + "t=" + movieNameClean)
         .then((response) => response.json())
         .then(movie => {
@@ -22,48 +41,36 @@ const fetchMovies = (movie) => {
         })
 }
 
-const fetchAll = (movie) => {
-    fetch(URL + "s=" + movieNameClean)
-      .then((response) => response.json())
-      .then((response) => {
-        let movies = response.Search
-        selector.innerHTML = "";
-        console.log(response);
-        movies.forEach(movie => {
-          const poster = movie.Poster;
-          const title = movie.Title;
-          const released = movie.Year;
-          const movieId = movie.imdbID
-          showFilmInfo(poster, title, released, movieId)
-      });
-    })
-
-}
-
-const moviesInfo = (poster, title, release, movieId) => {
+const moviesInfo = (poster, title, release) => {
     selector.innerHTML += `
-                            <div class="movies-items not-visible">
-                                <img class="movie-poster" src="${poster}" onclick="fetchAll(${movieId})">
+                            <div class="movies-items">
+                                <img class="movie-poster" src="${poster}">
                                 <div class="movie-bottom">
                                     <h3>${title}</h3>
                                     <h4>${release}</h4>
+                                    <button type="submit" class="btn btn-primary" onclick="fetchMovies('${title}')">Read More</button>
                                 </div>
                             </div>
                             `
 }
 
 const showMovieFetched = (poster, title, release, writer, actors, description) => {
-    selector.innerHTML += `
-                            <div class="movie-items not-visible">
+    const infoMovie = document.getElementById('modal');
+    const showInfoMovie = document.getElementById('modal');
+    showInfoMovie.innerHTML = ""
+    infoMovie.classList.remove("hidden");
+    showInfoMovie.innerHTML += `
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
                                 <img class="movie-poster" src="${poster}">
-                                <div class="movie-bottom">
-                                    <h3>${title}</h3>
-                                    <h4>${release}</h4>
-                                    <p><strong>Writed by: </strong> ${writer}</p>
-                                    <p><strong>Acted by: </strong> ${actors}</p>
-                                    <p>${description}</p>
-                                </div>
+                                <h3>${title}</h3>
+                                <h4>${release}</h4>
+                                <p><strong>Writed by: </strong> ${writer}</p>
+                                <p><strong>Acted by: </strong> ${actors}</p>
+                                <p>${description}</p>
                             </div>
                             `
+    document.addEventListener('click', () => {
+        infoMovie.classList.add("hidden");
+    })
 }
-
