@@ -11,16 +11,16 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
                 <h1 class="display-4 mb-2">Movies Searching Engines</h1>
-                <form>
+                <form class="search">
                    <input type="text" id="searchButton" class="searchTerms" placeholder="    Search Movies here">
-                   <button id="search-launch" class="btn btn-outline-light">Search</button>
+                   <button class="btn btn-outline-light">Search</button>
                 </form>
             </div>
         </div>
         <div class="container">
             <div class="movies-list" id="movie"></div>
+            <div id="modal" class="modal hidden"></div>
         </div>
-        <div id="modal" class="modal hidden"></div>
 
         <script src="js/index.js" async defer></script>
         <script src="js/search.js" async defer></script>

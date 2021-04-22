@@ -8,7 +8,6 @@ const fetchAll = (movie) => {
       .then((response) => {
         let movies = response.Search
         selector.innerHTML = "";
-        console.log(response); // A remove
         movies.forEach(movie => {
             if (movie.Poster !== "N/A"){
                 const poster = movie.Poster;
@@ -19,8 +18,10 @@ const fetchAll = (movie) => {
             }
       });
     })
-
-}
+    .catch(error => {
+        console.error('error: ', error);
+    })
+};
 
 const fetchMovies = (movie) => {
     let movieNameClean = movie.replace(/\s/g, '+');
@@ -55,22 +56,24 @@ const moviesInfo = (poster, title, release) => {
 }
 
 const showMovieFetched = (poster, title, release, writer, actors, description) => {
-    const infoMovie = document.getElementById('modal');
     const showInfoMovie = document.getElementById('modal');
+    const infoMovie = document.getElementById('modal');
     showInfoMovie.innerHTML = ""
     infoMovie.classList.remove("hidden");
+    showInfoMovie.style.display = "block";
     showInfoMovie.innerHTML += `
-                            <div class="modal-content">
+                            <div class="content-modal">
                                 <span class="close">&times;</span>
-                                <img class="movie-poster" src="${poster}">
+                                <img src="${poster}">
                                 <h3>${title}</h3>
                                 <h4>${release}</h4>
-                                <p><strong>Writed by: </strong> ${writer}</p>
-                                <p><strong>Acted by: </strong> ${actors}</p>
+                                <p><strong>Writed by: </strong>${writer}</p>
+                                <p><strong>Acted by: </strong>${actors}</p>
                                 <p>${description}</p>
                             </div>
                             `
     document.addEventListener('click', () => {
         infoMovie.classList.add("hidden");
+        showInfoMovie.style.display = "none";
     })
 }
