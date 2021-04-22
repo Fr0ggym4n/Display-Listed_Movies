@@ -1,4 +1,4 @@
-const URL = "http://www.omdbapi.com/?apikey=cffce37f&"
+const URL = "https://www.omdbapi.com/?apikey=cffce37f&"
 const imgURL = "http://img.omdbapi.com/?apikey=cffce37f&"
 
 const selector = document.getElementById("movie");
