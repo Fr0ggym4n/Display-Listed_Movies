@@ -1,4 +1,4 @@
-const URL = "https://www.omdbapi.com/?apikey="
+const URL = "https://www.omdbapi.com/?apikey=cffce37f"
 const selector = document.getElementById("movie");
 
 const fetchAll = (movie) => {
